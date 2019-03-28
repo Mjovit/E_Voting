@@ -8,7 +8,6 @@ fs.removeSync(buildPath);
 const votingPath = path.resolve(__dirname, 'contracts', 'voting.sol');
 const source = fs.readFileSync(votingPath, 'utf8');
 const output = solc.compile(source, 1).contracts;
-console.log(output);
 fs.ensureDirSync(buildPath);
 
 for (let contract in output){
