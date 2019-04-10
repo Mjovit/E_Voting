@@ -6,10 +6,10 @@ import web3 from '../../ethereum/web3';
 import { Router} from '../../routes';
 
 
-class VotingNew extends Component {
+class VotingVote extends Component {
     state = {
-        nameofthecandidate:'',
-        party:'',
+        uid:'',
+        candidateid:'',
         errorMessage:''
     };
 
@@ -20,12 +20,15 @@ class VotingNew extends Component {
         try{
         const accounts = await web3.eth.getAccounts();
         await voting.methods
-        .addCandidate(this.state.nameofthecandidate,this.state.party)
+        .vote(this.state.uid,this.state.candidateid)
         .send({
             from: accounts[0]
 
         });
         Router.pushRoute('/');
+        //const add = await voting.methods.candidates(this.state.candidateid).call();
+       // console.log(add);
+       // Router.pushRoute('/');
     } catch (err){
         this.setState({ errorMessage: err.message });
     }
@@ -35,34 +38,33 @@ class VotingNew extends Component {
     };
     render() {
         return (
-        
         <Layout>
-            <h3>Add a Candidate</h3>
+            <h3>Vote For Your Candidate</h3>
 
-            <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage} >
-             <Form.Field>
-                <label>Name of the Candidate</label>
+            <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
+            <Form.Field>
+                <label>User ID</label>
                 <Input
-                value={this.state.nameofthecandidate}
-                onChange={event => this.setState({ nameofthecandidate: event.target.value}) }
+                value={this.state.uid}
+                onChange={event => this.setState({ uid: event.target.value}) }
+                 />
+            </Form.Field>
+             <Form.Field>
+                <label>Candidate ID</label>
+                <Input
+                value={this.state.candidateid}
+                onChange={event => this.setState({ candidateid: event.target.value}) }
                  />
             </Form.Field>
 
-            <Form.Field>
-                <label>Party</label>
-                <Input 
-                value={this.state.party}
-                onChange={event => this.setState({ party: event.target.value}) }
-                />
-            </Form.Field>
+           
             <Message error header="Oops!" content={this.state.errorMessage} />
 
-             <Button loading={this.state.loading} primary>Add</Button>
+             <Button loading={this.state.loading} primary>Vote</Button>
             </Form>
         </Layout>
-        
         );
     }
 }
 
-export default VotingNew;
+export default VotingVote;

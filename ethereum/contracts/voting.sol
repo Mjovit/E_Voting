@@ -32,6 +32,7 @@ contract Voting{
     struct candidate{
         string name;
         string party;
+        uint totalvotes;
         bool doesExist;
         
     }
@@ -44,7 +45,8 @@ contract Voting{
     
     function addCandidate(string name, string party) restricted public {
         uint candidateID =numcandidates++;
-         candidates[candidateID] = candidate(name,party,true);
+        uint totalvotes = totalVotes(candidateID);
+         candidates[candidateID] = candidate(name,party,totalvotes,true);
          AddedCandidate(candidateID);
          
     }
@@ -56,6 +58,7 @@ contract Voting{
                        players[msg.sender] = true;
                 
             }
+        candidates[candidateID].totalvotes = totalVotes(candidateID);
             
         }
     

@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
-import { Header, Menu } from 'semantic-ui-react';
+import { Header, Menu, Segment } from 'semantic-ui-react';
 import voting from '../ethereum/voitng';
 import Layout from '../components/Layout';
+import { Link } from '../routes';
 
 class VotingIndex extends Component {
-     /*  static async getInitialProps() {
-        const votings = await voting.methods.candidates().call();
-        return { votings };
-    }
-    renderVotings() {
-      const items =this.props.votings.map(uint => {
-          return{
-              header: candidate,
-              description:<a>View Campaign</a>,
-              fluid: true
-          };
-      });
-
-      return <Card.Group items={items} />;
-  }
-*/
+        /*static async getInitialProps() {
+        const votings = await voting.methods.candidates(0).call();
+        console.log(votings);
+        return { };
+    }*/
+    
   state = {}
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -33,32 +24,24 @@ class VotingIndex extends Component {
 
     return (
         <Layout>
-        <div>
-      <Menu vertical>
-        <Menu.Item
-          name='AddCandidates'
-          active={activeItem === 'AddCandidates'}
-          onClick={this.handleItemClick}
-        >
-          <Header as='h4'>Add Candidates</Header>
-          <p>Only manager can add Candidates</p>
-        </Menu.Item>
+        <div  style={{ marginBottom: 60}}>
+      <Segment inverted>
+      <Menu vertical inverted pointing secondary >
+      <Link route="/evote/new">
+            <a className="item">Add Candidate</a>
+      </Link>
 
-        <Menu.Item name='coupons' active={activeItem === 'coupons'} onClick={this.handleItemClick}>
-          <Header as='h4'>Vote</Header>
-          <p>vote for your candidate</p>
-        </Menu.Item>
+      <Link route="/evote/vote">
+            <a className="item">Vote</a>
+      </Link>
 
-        <Menu.Item name='rebates' active={activeItem === 'rebates'} onClick={this.handleItemClick}>
-          <Header as='h4'>Total Votes</Header>
-          <p>Number of votes for each candidate</p>
-        </Menu.Item>
+      <Link route="/evote/candidates">
+            <a className="item">Candidate list</a>
+      </Link>
 
-        <Menu.Item name='noofvoters' active={activeItem === 'noofvoters'} onClick={this.handleItemClick}>
-          <Header as='h4'>Number of Voters</Header>
-          <p>Number of voters participated for election</p>
-        </Menu.Item>
+
       </Menu>
+      </Segment>
        
      
        </div>
